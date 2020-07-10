@@ -1,10 +1,14 @@
 class MessagesController < ApplicationController
+  before_action :set_message, only: [:show, :edit, :update
+  ]
+  
   def index
      @messages = Message.all
   end
 
   def show
-    @message = Message.find(params[:id])
+    #set_message
+    #@message = Message.find(params[:id])
     # index アクションのときは Message.all でレコード全てを取得していたが、
     #今回は id が指定されているので、
     #Message.find(params[:id]) によって1つだけ取得する
@@ -30,12 +34,14 @@ class MessagesController < ApplicationController
   end
 
   def edit
-    @message = Message.find(params[:id])
+    #set_message
+    #@message = Message.find(params[:id])
     #params[:id]による検索
   end
 
   def update
-    @message = Message.find(params[:id])
+    #set_message
+    #@message = Message.find(params[:id])
 
     if @message.update(message_params)
       flash[:success] = 'Message は正常に更新されました'
@@ -47,14 +53,19 @@ class MessagesController < ApplicationController
   end
 
   def destroy
-    @message = Message.find(params[:id])
+    set_message
+    #@message = Message.find(params[:id])
     @message.destroy
 
     flash[:success] = 'Message は正常に削除されました'
     redirect_to messages_url
   end
   
-   private
+  private
+   
+  def set_message
+     @message - Message.find(params[:id])
+  end
 
   # Strong Parameter
   def message_params
